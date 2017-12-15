@@ -1,0 +1,308 @@
+<project name="muMscpApp" default="jacocoReport" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
+	<property name="citi.nexus.repo" value="http://nyhublnx3.nam.nsroot.net:8081/nexus/content/repositories/public" />
+<!--    ######################### PROPERTIES ############################ -->
+
+	<property name="XENVBASE" value="/xenv" />
+	<property environment="xenv" />
+
+	<!-- Install Directories -->
+	<property name="package.name" value="MuMscpApp" />
+
+	<!-- Arguments to GWT compiler  -localWorkers 5 -->
+	<property name="gwt.args" value=" -logLevel ERROR " />
+
+	<property NAME="COMMONS_BEANUTILS" value="/xenv/commons-beanutils/X/1.8.3"/>
+	
+	<property name="dir.src" value="${basedir}/src" />
+	<property name="dir.test" value="${basedir}/test" />
+	<property name="dir.config" value="${basedir}/config/dev" />
+	<property name="junit" value="${basedir}/junit" />
+	<property name="test" value="${junit}/test"/>
+	<property name="target" value="${junit}/target"/>
+	<property name="test.report" value="${junit}/report"/>
+	<property name="test.junitreport" value="${junit}/junitreport"/>
+	<property name="coverage.report" value="${junit}/coverage" />
+	<property name="build.dir" value="${junit}/bin" />
+	<property name="lib.dir" value="${junit}/lib" />
+
+
+<!--    ######################### LIBs  ################################# -->	
+
+	<path id="xenv.gwt.classpath">
+		<fileset dir="C:\Users\YJ56152\Documents\test-lib" includes="gwt-servlet.jar" />
+		<fileset dir="C:\Users\YJ56152\Documents\test-lib" includes="gwt-dev.jar" />
+		<fileset dir="C:\Users\YJ56152\Documents\test-lib" includes="gwt-user.jar" />
+	</path>
+
+	<path id="project.classpath">
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/antlr-2.7.6.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/aopalliance-1.0.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/commons-logging-1.1.1.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jaxb-api-2.1.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jaxb-impl-2.1.7.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jboss-logging-3.1.0.CR2.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jta-1.1.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/hibernate-validator-4.3.0.Final.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/hibernate-commons-annotations-4.0.1.Final.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/validation-api-1.0.0.GA.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/servlet-api-2.5.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/mail-1.4.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/javassist-3.15.0-GA.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/hibernate-jpa-2.0-api-1.0.1.Final.jar" />
+<!-- 		<pathelement location="${xenv.SPRING_FRAMEWORK}/libs/spring-aop-3.2.2.RELEASE.jar" />
+		<pathelement location="${xenv.SPRING_FRAMEWORK}/libs/spring-beans-3.2.2.RELEASE.jar" />
+		<pathelement location="${xenv.SPRING_FRAMEWORK}/libs/spring-context-3.2.2.RELEASE.jar" />
+		<pathelement location="${xenv.SPRING_FRAMEWORK}/libs/spring-context-support-3.2.2.RELEASE.jar" />
+		<pathelement location="${xenv.SPRING_FRAMEWORK}/libs/spring-core-3.2.2.RELEASE.jar" />
+		<pathelement location="${xenv.SPRING_FRAMEWORK}/libs/spring-jdbc-3.2.2.RELEASE.jar" />
+		<pathelement location="${xenv.SPRING_FRAMEWORK}/libs/spring-jms-3.2.2.RELEASE.jar" />
+		<pathelement location="${xenv.SPRING_FRAMEWORK}/libs/spring-orm-3.2.2.RELEASE.jar" />
+		<pathelement location="${xenv.SPRING_FRAMEWORK}/libs/spring-tx-3.2.2.RELEASE.jar" />
+		<pathelement location="${xenv.SPRING_FRAMEWORK}/libs/spring-web-3.2.2.RELEASE.jar" />
+		<pathelement location="${xenv.SPRING_FRAMEWORK}/libs/spring-webmvc-3.2.2.RELEASE.jar" />
+		<pathelement location="${xenv.SPRING_FRAMEWORK}/libs/spring-expression-3.2.2.RELEASE.jar" />
+		<pathelement location="${xenv.SPRING_FRAMEWORK}/libs/spring-test-3.2.2.RELEASE.jar"/> -->
+		
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-aop-4.3.1.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-beans-4.3.1.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-context-4.3.1.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-context-support-4.3.1.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-core-4.3.1.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-jdbc-4.3.1.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-jms-4.3.1.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-orm-4.3.1.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-tx-4.3.1.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-web-4.3.1.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-webmvc-4.3.1.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-expression-4.3.1.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-test-4.3.1.RELEASE.jar" />
+		
+		
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/hibernate-core-4.1.9.Final.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/hibernate-entitymanager-4.1.9.Final.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/aspectjrt.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/aspectjtools.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/aspectjweaver.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/commons-fileupload-1.3.1.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/commons-collections4-4.1.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/commons-io-2.4.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/commons-lang-2.6.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/commons-beanutils-1.8.3.jar"/>
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/ehcache-core-2.4.3.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/esClient.jar" />							   
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jstl.jar" />
+		<!-- <pathelement location="${xenv.JACKSON}/jackson-core-asl-1.9.6.jar" />
+		<pathelement location="${xenv.JACKSON}/jackson-mapper-asl-1.9.6.jar" /> -->
+		
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jackson-annotations-2.8.7.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jackson-core-2.8.7.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jackson-databind-2.8.7.jar" />
+		
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/log4j-1.2.13.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/logback-core-1.0.9.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/logback-classic-1.0.9.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/protobuf-java-2.3.0.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/slf4j-api-1.6.4.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jcl-over-slf4j-1.6.4.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jms-2.0.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/tibcrypt.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/tibjms.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/dfc.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/certjFIPS.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jsafeFIPS.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/configservice-api.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/configservice-impl.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/poi-3.8-20120326.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/poi-ooxml-3.8-20120326.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/poi-ooxml-schemas-3.8-20120326.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/xmlbeans-2.3.0.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/ojdbc6.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-security-config-3.1.4.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-security-core-3.1.4.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-security-web-3.1.4.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-batch-core-3.0.0.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-batch-infrastructure-3.0.0.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/spring-retry-1.1.0.RELEASE.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jettison-1.2.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/javax.batch-api-1.0.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/gxt-3.0.1.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/muMscpSharedLib.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/muMscpGXTLib.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/muMscpDocLib.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/muMscpBpmAdpLib.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/dom4j.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/xstream-1.4.2.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/b1base.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/b1oracle.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/b1sqlserver.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/b1util.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/fuego.ant.j2ee.jar" />
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/wlthint3client.jar"/>
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/velocity-1.6.3.jar"/>
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/commons-pool2-2.4.2.jar"/>
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jersey-client-1.8.jar"/>
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jersey-core-1.8.jar"/>
+		<pathelement location="C:\Users\YJ56152\Documents\test-lib/jersey-json-1.8.jar"/>
+		<!-- <pathelement location="${xenv.JACKSON}/jackson-jaxrs-1.9.6.jar"/>
+		<pathelement location="${xenv.JACKSON}/jackson-xc-1.9.6.jar"/> -->
+	</path>
+
+<!--	######################### TASKs ############################################# -->
+
+	<target name="clean">
+		<delete dir="${junit}" />
+	</target>
+	
+	<target name="init">
+		<mkdir dir="${junit}" />
+		<mkdir dir="${junit}/config/dev" />
+		<mkdir dir="${junit}/log" />
+		<mkdir dir="${junit}/diskcache" />
+		<mkdir dir="${test}" />
+		<mkdir dir="${target}" />
+		<mkdir dir="${test.report}" />
+		<mkdir dir="${test.junitreport}" />
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${lib.dir}" />
+	</target>
+
+	<target name="preCompile" depends="clean,init" description="prepare build directory">
+
+		<copy todir="${lib.dir}" verbose="true" flatten="true">
+			<path refid="project.classpath" />
+		</copy>
+		<!--Copy junit jars-->
+		<copy todir="${lib.dir}" verbose="true"> 
+			<resources>
+				<url url="${citi.nexus.repo}/junit/junit/4.12/junit-4.12.jar" />
+				<url url="${citi.nexus.repo}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+			</resources>
+		</copy>
+		<!-- Copy jacoco and depends -->
+		<copy todir="${lib.dir}" verbose="true">
+			<resources>
+				<url url="${citi.nexus.repo}/org/jacoco/org.jacoco.agent/0.7.5.201505241946/org.jacoco.agent-0.7.5.201505241946.jar" />
+				<url url="${citi.nexus.repo}/asm/asm-debug-all/5.0.2/asm-debug-all-5.0.2.jar" />
+				<url url="${citi.nexus.repo}/org/jacoco/org.jacoco.core/0.7.5.201505241946/org.jacoco.core-0.7.5.201505241946.jar" />
+				<url url="${citi.nexus.repo}/org/jacoco/org.jacoco.report/0.7.5.201505241946/org.jacoco.report-0.7.5.201505241946.jar" />
+				<url url="${citi.nexus.repo}/org/jacoco/org.jacoco.ant/0.7.5.201505241946/org.jacoco.ant-0.7.5.201505241946.jar" />
+			</resources>
+		</copy>
+	</target>
+	
+	<path id="junit.classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="jacoco.classpath">
+		<fileset dir="${lib.dir}/nexus" includes="**/*.jar"/>
+	</path>
+
+	<target name="compile" depends="preCompile" description="Compile java source to bytecode">
+		<javac srcdir="src" includes="**" encoding="utf-8" destdir="${build.dir}" 
+					source="1.8" target="1.8" nowarn="true" debug="true" debuglevel="lines,vars,source" includeantruntime="false" excludes="com/citi/muni/mscp/client/**,com/citi/muni/mscp/controller/**">
+			<classpath>
+				<path refid="xenv.gwt.classpath" />
+				<path refid="junit.classpath"/>
+			</classpath>
+		</javac>
+		
+		<!--  Copy the GWT module XML file -->
+		<copy toDir="${build.dir}">
+			 <fileset dir="src" includes="**/*.gwt.xml" />
+			 <fileset dir="src" includes="**/*.xml" />
+			 <fileset dir="src" includes="**/*.properties" />
+			 <fileset dir="src" includes="**/*.html" />
+			 <fileset dir="src" includes="**/*.jpg" />
+			 <fileset dir="${dir.config}"/>
+        </copy>	
+	</target>
+	
+	<target  name="build-test" depends="compile"  >
+		<javac destdir="${test}" encoding="utf-8" debug="true" srcdir="./test" source="1.8" target="1.8" nowarn="true" debuglevel="lines,vars,source" includeantruntime="false">
+			<include name="**/*.java" />
+			<classpath>
+				<path refid="xenv.gwt.classpath" />
+				<path refid="junit.classpath"/>
+				<pathelement location="${build.dir}"/>
+			</classpath>
+			<src path="${basedir}/test" />
+		</javac>
+		<copy toDir="${test}">
+		    <fileset dir="test" includes="**/*.xml" />
+		</copy>	
+	</target>
+	
+	<target name="unitTest" depends="build-test">
+		<!--
+		<copy todir="${junit}/config/uat">
+			<fileset dir="${dir.config}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+-->
+		<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+			<classpath>
+				<path refid="junit.classpath"></path>
+			</classpath>
+		</taskdef>
+		
+		<jacoco:coverage destfile="${target}/jacoco.exec" xmlns:jacoco="antlib:org.jacoco.ant">
+				<junit fork="true" failureproperty="unit.test.failure" forkmode="once">
+					<classpath>
+						<pathelement location="${build.dir}"/>
+						<pathelement location="${test}"/>
+						<path refid="project.classpath"/>
+						<path refid="junit.classpath"/>
+					</classpath>
+					<formatter type="xml"/>
+					<jvmarg value="-Xms512m"/>
+					<jvmarg value="-Xmx2096m"/>  
+					<batchtest todir="${test.report}">
+						<fileset dir="${basedir}/test">	
+							
+							<include name="**/EsatServiceImplTest.java"/>
+							<include name="**/ActionServiceImplTest.java"/>
+	                        <include name="**/AuditServiceTest.java"/>
+							<include name="**/DealServiceImplNewTest"/>
+							<exclude name="**/DealTraxProcessingTest.java" /> 
+							<exclude name="**/DataMigrationServiceTest.java" />
+							<exclude name="**/DealServiceImplTest.java" />
+							<exclude name="**/*dao*/**" />
+							<exclude name="**/*vo*/**" />
+							<exclude name="**/*util*/**" />						
+						</fileset>
+					</batchtest>  
+				</junit>
+			</jacoco:coverage>
+		
+		<antcall target="junitreport"/>
+	</target>
+
+	<target name="junitreport">
+		<junitreport todir="${test.junitreport}">
+			<fileset dir="${test.report}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${test.junitreport}"/>
+		</junitreport>
+	</target>
+
+	<target name="jacocoReport" depends="unitTest">
+		<jacoco:report>
+			<executiondata>
+				<file file="${target}/jacoco.exec"/>
+			</executiondata>
+
+			<structure name="jacoco_demo">
+				<classfiles>
+					<fileset dir="${build.dir}"/>
+				</classfiles>
+				<sourcefiles encoding="UTF-8">
+					<fileset dir="${dir.src}"/>
+				</sourcefiles>
+			</structure>
+			<html destdir="${coverage.report}"/>
+		</jacoco:report>
+	</target>
+</project>
